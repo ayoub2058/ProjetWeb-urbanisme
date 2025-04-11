@@ -273,6 +273,38 @@
                 }
             }
         });
+
+        const contactForm = document.getElementById("contact-form");
+
+        contactForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            // Get form data
+            const name = document.getElementById("contact-name").value;
+            const email = document.getElementById("contact-email").value;
+            const subject = document.getElementById("contact-subject").value;
+            const message = document.getElementById("contact-message").value;
+
+            // Create a ticket object
+            const ticket = {
+                name,
+                email,
+                subject,
+                message,
+                date: new Date().toLocaleDateString(),
+                status: "Pending"
+            };
+
+            // Save the ticket to local storage
+            const tickets = JSON.parse(localStorage.getItem("tickets")) || [];
+            tickets.push(ticket);
+            localStorage.setItem("tickets", JSON.stringify(tickets));
+
+            // Show success message and reset the form
+            alert("Your message has been sent successfully!");
+            contactForm.reset();
+        });
     </script>
 </body>
 </html>
+``` 

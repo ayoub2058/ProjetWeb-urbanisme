@@ -1057,9 +1057,31 @@
             mainNav.classList.toggle('active');
         });
     });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const authButtons = document.querySelector(".auth-buttons");
+
+        // Check login state
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+        if (isLoggedIn) {
+            // Clear existing buttons
+            authButtons.innerHTML = "";
+
+            // Create the "Dashboard" button
+            const dashboardButton = document.createElement("a");
+            dashboardButton.href = "user-dashboard.html";
+            dashboardButton.className = "btn btn-primary";
+            dashboardButton.textContent = "Dashboard";
+
+            // Append the button to the header
+            authButtons.appendChild(dashboardButton);
+        }
+    });
     </script>
     
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 </body>
 </html>
+`
