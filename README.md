@@ -66,8 +66,8 @@ Des fonctionnalités supplémentaires seront intégrées dans les versions futur
 
 Un compte administrateur est créé automatiquement avec les identifiants suivants :
 
-- **Email** : `admin@clyptor.com`  
-- **Mot de passe** : `admin123`  
+- **Email** : `user@clyptor.com`  
+- **Mot de passe** : `taki123`  
 
 Après connexion, cliquez sur le lien **Admin** pour accéder au tableau de bord d’administration où vous pouvez :
 - Gérer les utilisateurs
