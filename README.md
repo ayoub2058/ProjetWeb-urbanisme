@@ -1,4 +1,4 @@
-# 🚀 Clyptor – Application Web de Mobilité Durable
+# 🚀 Clyptor – Application Web de Mobilité Durable.
 
 **Clyptor** est une application web innovante réalisée dans le cadre d’un **projet universitaire** en Technologies Web (Année universitaire 2024-2025). Elle propose une plateforme simple pour le **covoiturage**, la **location** et la **vente de maisons**, avec une interface d’administration intégrée. Ce projet met l'accent sur la **mobilité durable**, l'**écologie urbaine** et la **communauté intelligente**.
 
