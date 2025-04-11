@@ -1,33 +1,108 @@
-# ProjetWeb-urbanisme
-Clyptor Web Application - Setup Instructions
+# 🚀 Clyptor – Application Web de Mobilité Durable
 
-1. DOWNLOAD AND EXTRACT
-- Download the ZIP file and extract it to your preferred directory.
+**Clyptor** est une application web innovante réalisée dans le cadre d’un **projet universitaire** en Technologies Web (Année universitaire 2024-2025). Elle propose une plateforme simple pour le **covoiturage**, la **location** et la **vente de maisons**, avec une interface d’administration intégrée. Ce projet met l'accent sur la **mobilité durable**, l'**écologie urbaine** et la **communauté intelligente**.
 
-2. RUN THE APPLICATION
-- Since this is a frontend-only version, you can simply open the index.html file in your web browser.
-- No server setup is required as all data is stored in the browser's localStorage.
+---
 
-3. ADMIN ACCESS
-- An admin account is automatically created:
-  Email: admin@clyptor.com
-  Password: admin123
-- You can access the admin dashboard by logging in with these credentials and clicking the "Admin" link.
+## 👥 Membres du Groupe
 
-4. USING THE APPLICATION
-- Register new accounts to access all features
-- Create posts in any of the three services
-- Test the admin functionality by managing users, posts, and messages
+Ce projet a été réalisé par le groupe suivant :
 
-5. LIMITATIONS
-- This is a frontend-only demo. In a production environment:
-  - You would need PHP/MySQL or another backend system
-  - Image uploads would need server-side processing
-  - Authentication would need proper security measures
-  - Data would persist across browsers/devices
+- Ayoub Bezi  
+- Taki Mejri  
+- Sadok Dridi  
+- Amal Manai  
+- Neirouz Ghabri  
+- Ranim Wadrani  
 
-6. BROWSER COMPATIBILITY
-- Tested on Chrome, Firefox, and Edge
-- May have limited functionality on Safari or mobile browsers due to localStorage limitations
+---
 
-For any questions, please contact support@clyptor.com
+## 📌 Description du Projet
+
+Clyptor est une application en cours de développement. Elle propose une expérience utilisateur intuitive, avec des services tournés vers la mobilité partagée et l'immobilier durable. Le projet sera régulièrement mis à jour avec de nouvelles fonctionnalités et une intégration backend complète.
+
+### Fonctionnalités prévues :
+- Création de comptes utilisateurs
+- Publication et consultation de trajets de covoiturage
+- Gestion d’annonces de location et de vente de maisons
+- Tableau de bord administrateur (gestion des utilisateurs, messages et publications)
+- Stockage sécurisé des données et authentification avancée
+
+---
+
+## 📚 Table des Matières
+
+- [Installation](#installation)
+- [Utilisation](#utilisation)
+- [Fonctionnalités Administrateur](#fonctionnalités-administrateur)
+- [Compatibilité Navigateur](#compatibilité-navigateur)
+- [Contribution](#contribution)
+- [Licence](#licence)
+- [Contact](#contact)
+
+---
+
+## 🛠️ Installation
+
+1. **Téléchargez** le fichier ZIP du projet.
+2. **Extrayez** son contenu dans un répertoire local de votre choix.
+3. **Ouvrez** le fichier `index.html` dans votre navigateur préféré.
+4. Aucune installation serveur n’est requise pour la version actuelle.
+
+---
+
+## 🚀 Utilisation
+
+- Créez un compte utilisateur pour commencer à utiliser les services.
+- Accédez à la page de covoiturage ou d’annonces immobilières.
+- Créez de nouvelles publications selon votre besoin.
+- Gérez vos publications et messages depuis votre profil.
+
+Des fonctionnalités supplémentaires seront intégrées dans les versions futures.
+
+---
+
+## 🔐 Fonctionnalités Administrateur
+
+Un compte administrateur est créé automatiquement avec les identifiants suivants :
+
+- **Email** : `admin@clyptor.com`  
+- **Mot de passe** : `admin123`  
+
+Après connexion, cliquez sur le lien **Admin** pour accéder au tableau de bord d’administration où vous pouvez :
+- Gérer les utilisateurs
+- Supprimer des publications
+- Modérer les messages
+
+---
+
+## 🌐 Compatibilité Navigateur
+
+Testé sur les navigateurs suivants :
+- ✅ Chrome
+- ✅ Firefox
+- ✅ Microsoft Edge
+- ⚠️ Safari / mobile : quelques limitations possibles (affichage, stockage local)
+
+---
+
+## 🤝 Contribution
+
+⚠️ **Ce projet est un travail universitaire. Seuls les membres du groupe sont autorisés à contribuer.**  
+Les contributions externes ne sont pas acceptées dans ce repository.
+
+---
+
+## 📄 Licence
+
+Ce projet est sous licence **MIT** à usage académique uniquement.  
+Toute réutilisation doit se faire dans un cadre pédagogique ou personnel.
+
+---
+
+## 📬 Contact
+
+Pour toute question liée au projet :  
+📧 [support@clyptor.com](mailto:support@clyptor.com)
+
+---
