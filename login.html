@@ -46,6 +46,10 @@
     const toggleText = document.getElementById("toggle-text");
     const toggleLink = document.getElementById("toggle-link");
 
+    // Hardcoded user credentials
+    const userEmail = "user@clyptor.com";
+    const userPassword = "taki123";
+
     toggleLink.addEventListener("click", (e) => {
       e.preventDefault();
       const isLogin = loginForm.style.display !== "none";
@@ -62,6 +66,24 @@
         formTitle.textContent = "Login";
         toggleText.textContent = "Don't have an account?";
         toggleLink.textContent = "Register";
+      }
+    });
+
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault(); // Prevent the default form submission
+
+      // Get the entered email and password
+      const emailInput = loginForm.querySelector('input[type="email"]').value;
+      const passwordInput = loginForm.querySelector('input[type="password"]').value;
+
+      // Validate the credentials
+      if (emailInput === userEmail && passwordInput === userPassword) {
+        // If login is successful, redirect to the user dashboard
+        alert("Login successful!");
+        window.location.href = "user/user-dashboard.html"; // Redirect to the user dashboard
+      } else {
+        // If login fails, show an error message
+        alert("Invalid email or password. Please try again.");
       }
     });
   </script>
