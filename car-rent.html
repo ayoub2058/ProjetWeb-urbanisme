@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clyptor - Car Rent</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/hf.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.php" class="logo">
+                <!-- <img src="assets/images/logo.png" alt="Clyptor Logo"> -->
+                <span class="logo-text">Clyptor</span>
+            </a>
+            <div class="logo-3d"></div>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="covoiturage.html">Carpooling</a></li>
+                <li><a href="home-rent.html">Home Rent</a></li>
+                <li><a href="car-rent.html">Car Rent</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        
+        <div class="auth-buttons">
+            <a href="login.html" class="btn btn-outline">Login</a>
+            <a href="login.html" class="btn btn-primary">Register</a>
+        </div>
+        
+        <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <main class="service-main">
+        <section class="service-hero">
+            <div class="hero-content">
+                <h1>Car Rental</h1>
+                <p>Rent cars by the hour, day, or week from local owners.</p>
+                <button id="create-post-btn" class="cta-button">List Your Vehicle</button>
+            </div>
+            <div class="hero-image">
+                <spline-viewer url="https://prod.spline.design/W9odOGD6ccShUyRp/scene.splinecode"></spline-viewer>
+                <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+
+            </div>
+        </section>
+        
+        
+
+        <section class="post-form-container" id="post-form-container" style="display:none;">
+            <h2>List Your Vehicle</h2>
+            <form id="post-form" class="post-form">
+                <div class="form-group">
+                    <label for="post-title">Vehicle Title</label>
+                    <input type="text" id="post-title" placeholder="e.g., 2020 Toyota Camry" required>
+                </div>
+                <div class="form-group">
+                    <label for="post-description">Description</label>
+                    <textarea id="post-description" placeholder="Describe your vehicle, features, and rental terms..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="post-images">Vehicle Images (up to 5)</label>
+                    <input type="file" id="post-images" accept="image/*" multiple>
+                    <div id="image-preview" class="image-preview"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="post-make">Make</label>
+                        <input type="text" id="post-make" placeholder="Toyota" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-model">Model</label>
+                        <input type="text" id="post-model" placeholder="Camry" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-year">Year</label>
+                        <input type="number" id="post-year" min="1980" max="2023" value="2020" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="post-type">Vehicle Type</label>
+                        <select id="post-type" required>
+                            <option value="sedan">Sedan</option>
+                            <option value="suv">SUV</option>
+                            <option value="truck">Truck</option>
+                            <option value="van">Van/Minivan</option>
+                            <option value="luxury">Luxury</option>
+                            <option value="sports">Sports Car</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-transmission">Transmission</label>
+                        <select id="post-transmission" required>
+                            <option value="automatic">Automatic</option>
+                            <option value="manual">Manual</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-fuel">Fuel Type</label>
+                        <select id="post-fuel" required>
+                            <option value="gasoline">Gasoline</option>
+                            <option value="diesel">Diesel</option>
+                            <option value="electric">Electric</option>
+                            <option value="hybrid">Hybrid</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="post-location">Location</label>
+                        <input type="text" id="post-location" placeholder="City or address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-price-hour">Price per Hour ($)</label>
+                        <input type="number" id="post-price-hour" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="post-price-day">Price per Day ($)</label>
+                        <input type="number" id="post-price-day" min="0" step="0.01" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-price-week">Price per Week ($)</label>
+                        <input type="number" id="post-price-week" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">List Vehicle</button>
+                    <button type="button" id="cancel-post" class="cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="posts-section">
+            <h2>Available Vehicles</h2>
+            <div class="filter-controls">
+                <select id="filter-type">
+                    <option value="all">All Types</option>
+                    <option value="sedan">Sedan</option>
+                    <option value="suv">SUV</option>
+                    <option value="truck">Truck</option>
+                    <option value="van">Van/Minivan</option>
+                    <option value="luxury">Luxury</option>
+                    <option value="sports">Sports Car</option>
+                </select>
+                <select id="filter-price">
+                    <option value="all">Any Price</option>
+                    <option value="0-50">$0 - $50/day</option>
+                    <option value="50-100">$50 - $100/day</option>
+                    <option value="100-200">$100 - $200/day</option>
+                    <option value="200+">$200+/day</option>
+                </select>
+                <select id="filter-transmission">
+                    <option value="all">Any Transmission</option>
+                    <option value="automatic">Automatic</option>
+                    <option value="manual">Manual</option>
+                </select>
+            </div>
+            <div id="posts-container" class="posts-container">
+                <!-- Posts will be loaded here -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <div class="logo-container">
+                    <a href="index.php" class="logo">
+                        <!-- <img src="assets/images/logo.png" alt="Clyptor Logo"> -->
+                        <span class="logo-text">Clyptor</span>
+                    </a>
+                </div>
+                <p>Clyptor provides innovative solutions for carpooling, home rentals, and car rentals. Join our community today!</p>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="services/carpooling.php">Carpooling</a></li>
+                    <li><a href="services/home-rent.php">Home Rent</a></li>
+                    <li><a href="services/car-rent.php">Car Rent</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> TUNIS, BELVEDERE, BUREAU N°1</p>
+                <p><i class="fas fa-phone"></i> +216 52 180 466</p>
+                <p><i class="fas fa-envelope"></i> info@clyptor.tn</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Clyptor. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/posts.js"></script>
+    <script>
+        // Service-specific post handling
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle post form visibility
+            const createPostBtn = document.getElementById('create-post-btn');
+            const postFormContainer = document.getElementById('post-form-container');
+            const cancelPostBtn = document.getElementById('cancel-post');
+            
+            if (createPostBtn && postFormContainer) {
+                createPostBtn.addEventListener('click', function() {
+                    const user = JSON.parse(localStorage.getItem('current_user'));
+                    if (!user) {
+                        alert('Please login to create a post!');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    postFormContainer.style.display = 'block';
+                    window.scrollTo({ top: postFormContainer.offsetTop, behavior: 'smooth' });
+                });
+            }
+            
+            if (cancelPostBtn && postFormContainer) {
+                cancelPostBtn.addEventListener('click', function() {
+                    postFormContainer.style.display = 'none';
+                });
+            }
+            
+            // Image preview functionality
+            const imageInput = document.getElementById('post-images');
+            const imagePreview = document.getElementById('image-preview');
+            
+            if (imageInput && imagePreview) {
+                imageInput.addEventListener('change', function() {
+                    imagePreview.innerHTML = '';
+                    const files = this.files;
+                    
+                    for (let i = 0; i < Math.min(files.length, 5); i++) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            imagePreview.appendChild(img);
+                        };
+                        reader.readAsDataURL(files[i]);
+                    }
+                });
+            }
+            
+            // Extend the createPost function for car rental specific fields
+            const postForm = document.getElementById('post-form');
+            if (postForm) {
+                postForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const user = JSON.parse(localStorage.getItem('current_user'));
+                    if (!user) {
+                        alert('Please login to create a post!');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    
+                    const title = document.getElementById('post-title').value;
+                    const description = document.getElementById('post-description').value;
+                    const make = document.getElementById('post-make').value;
+                    const model = document.getElementById('post-model').value;
+                    const year = document.getElementById('post-year').value;
+                    const type = document.getElementById('post-type').value;
+                    const transmission = document.getElementById('post-transmission').value;
+                    const fuel = document.getElementById('post-fuel').value;
+                    const location = document.getElementById('post-location').value;
+                    const priceHour = document.getElementById('post-price-hour').value;
+                    const priceDay = document.getElementById('post-price-day').value;
+                    const priceWeek = document.getElementById('post-price-week').value;
+                    
+                    // Combine all details into the description
+                    const fullDescription = `${description}\n\nMake: ${make}\nModel: ${model}\nYear: ${year}\nType: ${type}\nTransmission: ${transmission}\nFuel: ${fuel}\nLocation: ${location}\n\nRental Prices:\n${priceHour ? `Hourly: $${priceHour}\n` : ''}Daily: $${priceDay}\n${priceWeek ? `Weekly: $${priceWeek}` : ''}`;
+                    
+                    // Handle multiple images
+                    const imageInput = document.getElementById('post-images');
+                    let imageUrls = [];
+                    
+                    if (imageInput.files && imageInput.files.length > 0) {
+                        const files = Array.from(imageInput.files).slice(0, 5);
+                        const readers = files.map(file => {
+                            return new Promise(resolve => {
+                                const reader = new FileReader();
+                                reader.onload = e => resolve(e.target.result);
+                                reader.readAsDataURL(file);
+                            });
+                        });
+                        
+                        Promise.all(readers).then(urls => {
+                            imageUrls = urls;
+                            saveCarPost(title, fullDescription, imageUrls, type, user, priceDay);
+                        });
+                    } else {
+                        saveCarPost(title, fullDescription, imageUrls, type, user, priceDay);
+                    }
+                });
+            }
+            
+            function saveCarPost(title, description, images, category, user, price) {
+                const posts = JSON.parse(localStorage.getItem('clyptor_posts')) || [];
+                
+                const newPost = {
+                    id: Date.now(),
+                    title,
+                    description,
+                    images, // Array of image URLs
+                    category,
+                    serviceType: 'car-rent',
+                    userId: user.id,
+                    userName: user.name,
+                    userEmail: user.email,
+                    date: new Date().toISOString(),
+                    status: 'active',
+                    price: parseFloat(price)
+                };
+                
+                posts.push(newPost);
+                localStorage.setItem('clyptor_posts', JSON.stringify(posts));
+                
+                alert('Vehicle listed successfully!');
+                postFormContainer.style.display = 'none';
+                filterPosts();
+            }
+            
+            // Filter posts
+            document.getElementById('filter-type')?.addEventListener('change', filterPosts);
+            document.getElementById('filter-price')?.addEventListener('change', filterPosts);
+            document.getElementById('filter-transmission')?.addEventListener('change', filterPosts);
+            
+            function filterPosts() {
+                const typeFilter = document.getElementById('filter-type').value;
+                const priceFilter = document.getElementById('filter-price').value;
+                const transmissionFilter = document.getElementById('filter-transmission').value;
+                const posts = JSON.parse(localStorage.getItem('clyptor_posts')) || [];
+                
+                const filteredPosts = posts.filter(post => {
+                    return post.serviceType === 'car-rent' && 
+                           (typeFilter === 'all' || post.category === typeFilter) &&
+                           filterByPrice(post.price, priceFilter) &&
+                           filterByTransmission(post.description, transmissionFilter);
+                });
+                
+                displayFilteredPosts(filteredPosts);
+            }
+            
+            function filterByPrice(price, filter) {
+                if (filter === 'all') return true;
+                
+                const [min, max] = filter === '200+' ? [200, Infinity] : filter.split('-').map(Number);
+                return price >= min && price <= max;
+            }
+            
+            function filterByTransmission(description, filter) {
+                if (filter === 'all') return true;
+                
+                return description.includes(`Transmission: ${filter}`);
+            }
+            
+            function displayFilteredPosts(posts) {
+                const postsContainer = document.getElementById('posts-container');
+                if (postsContainer) {
+                    postsContainer.innerHTML = '';
+                    
+                    if (posts.length === 0) {
+                        postsContainer.innerHTML = '<p class="no-posts">No vehicles match your filters. Try different criteria.</p>';
+                        return;
+                    }
+                    
+                    posts.forEach(post => {
+                        const priceMatch = post.description.match(/Daily: \$(.+)/);
+                        const price = priceMatch ? priceMatch[1] : 'N/A';
+                        
+                        const postElement = document.createElement('div');
+                        postElement.className = 'post-card vehicle-card';
+                        
+                        // Use first image if available, or placeholder
+                        const firstImage = post.images?.length > 0 ? post.images[0] : 'images/car-placeholder.jpg';
+                        
+                        postElement.innerHTML = `
+                            <div class="post-header">
+                                <h3>${post.title}</h3>
+                                <span class="post-category">${post.category}</span>
+                                <span class="post-price">$${price}/day</span>
+                            </div>
+                            <div class="post-image-slider">
+                                <img src="${firstImage}" alt="${post.title}">
+                            </div>
+                            <div class="post-content">
+                                <p>${post.description.substring(0, 150)}...</p>
+                            </div>
+                            <div class="post-footer">
+                                <span class="post-author">Posted by ${post.userName}</span>
+                                <span class="post-date">${new Date(post.date).toLocaleDateString()}</span>
+                            </div>
+                            <div class="post-actions">
+                                <button class="action-btn contact-btn" data-email="${post.userEmail}">Contact</button>
+                                <button class="action-btn save-btn">Save</button>
+                            </div>
+                        `;
+                        postsContainer.appendChild(postElement);
+                    });
+                    
+                    // Add event listeners to contact buttons
+                    document.querySelectorAll('.contact-btn').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const userEmail = this.getAttribute('data-email');
+                            window.location.href = `contact.html?prefill=${encodeURIComponent(`I'm interested in your vehicle listing!`)}+&email=${encodeURIComponent(userEmail)}`;
+                        });
+                    });
+                }
+            }
+            
+            // Initial load
+            filterPosts();
+        });
+    </script>
+</body>
+</html>
