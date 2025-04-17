@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Clyptor</title>
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+  <link rel="stylesheet" href="css/login.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Spline 3D Background -->
+  <spline-viewer url="https://prod.spline.design/NOspby6AJwzuaFUg/scene.splinecode"></spline-viewer>
+
+  <!-- Form Container -->
+  <div class="container" id="form-container">
+    <div class="logo-container">
+      <a href="../../index.php"><i class="fas fa-arrow-left back-button"></i></a>
+      <h1 class="logo">CLYPTOR</h1>
+    </div>
+    <h2 id="form-title">Login</h2>
+
+    <!-- Login Form -->
+    <form id="login-form">
+      <div class="input-group">
+        <i class="fas fa-user icon"></i>
+        <input type="text" name="username" id="username" placeholder="Username" required />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock icon"></i>
+        <input type="password" name="password" id="password" placeholder="Password" required />
+      </div>
+      <div class="remember-me">
+        <input type="checkbox" id="remember" name="remember">
+        <label for="remember">Remember me</label>
+      </div>
+      <div id="message-container" class="message-container"></div>
+      <button type="submit" id="login-btn" name="login">Login</button>
+      <div class="forgot-password">
+        <a href="forgot-password.php">Forgot Password?</a>
+      </div>
+    </form>
+
+    <!-- Toggle Link -->
+    <p class="toggle-container">
+      <span id="toggle-text">Don't have an account?</span>
+      <a href="register.html" id="toggle-link">Register</a>
+    </p>
+    
+    <!-- Social Login -->
+    <div class="social-login">
+      <p>Or login with</p>
+      <div class="social-icons">
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Additional styles to enhance the login page */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      margin-bottom: 10px;
+    }
+    
+    .back-button {
+      position: absolute;
+      left: 0;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    
+    .back-button:hover {
+      transform: translateX(-5px);
+    }
+    
+    .logo {
+      color: #0ff;
+      font-size: 24px;
+      letter-spacing: 2px;
+      margin: 0;
+    }
+    
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    .input-group .icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7f8c8d;
+    }
+    
+    .input-group input {
+      padding-left: 45px !important;
+    }
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      color: white;
+    }
+    
+    .remember-me input {
+      margin-right: 10px;
+    }
+    
+    .forgot-password {
+      text-align: center;
+      margin-top: 15px;
+    }
+    
+    .forgot-password a {
+      color: #0ff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    
+    .toggle-container {
+      text-align: center;
+      margin-top: 25px;
+      color: white;
+    }
+    
+    .social-login {
+      margin-top: 30px;
+      text-align: center;
+    }
+    
+    .social-login p {
+      color: white;
+      margin-bottom: 15px;
+      position: relative;
+    }
+    
+    .social-login p:before,
+    .social-login p:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .social-login p:before {
+      left: 0;
+    }
+    
+    .social-login p:after {
+      right: 0;
+    }
+    
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: white;
+      transition: all 0.3s;
+    }
+    
+    .social-icon:hover {
+      transform: translateY(-3px);
+      background: #0ff;
+      color: #333;
+    }
+    
+    button[type="submit"] {
+      background: linear-gradient(135deg, #0ff, #0c9db5);
+      box-shadow: 0 8px 15px rgba(0, 255, 255, 0.3);
+      transition: all 0.3s;
+    }
+    
+    button[type="submit"]:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px rgba(0, 255, 255, 0.4);
+    }
+    
+    .message-container {
+      text-align: center;
+      margin-bottom: 15px;
+      padding: 8px;
+      border-radius: 4px;
+      display: none;
+    }
+    
+    .error-message {
+      display: block;
+      background-color: rgba(255, 0, 0, 0.2);
+      color: #ff6b6b;
+      border: 1px solid #ff6b6b;
+    }
+    
+    .success-message {
+      display: block;
+      background-color: rgba(0, 255, 128, 0.2);
+      color: #2ecc71;
+      border: 1px solid #2ecc71;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('login-form');
+      const messageContainer = document.getElementById('message-container');
+      
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const rememberMe = document.getElementById('remember').checked;
+        
+        // Disable the login button and show loading state
+        const loginButton = document.getElementById('login-btn');
+        loginButton.disabled = true;
+        loginButton.innerHTML = 'Logging in...';
+        
+        // Clear any previous messages
+        messageContainer.className = 'message-container';
+        messageContainer.textContent = '';
+        messageContainer.style.display = 'none';
+        
+        // Create form data
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('password', password);
+        if (rememberMe) {
+          formData.append('remember', 'on');
+        }
+        
+        // Send AJAX request
+        fetch('login.php', {
+          method: 'POST',
+          body: formData,
+          credentials: 'same-origin'
+        })
+        .then(response => {
+          // Log response information for debugging
+          console.log('Response status:', response.status);
+          
+          // Check if response is ok (status in the 200-299 range)
+          if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.status);
+          }
+          
+          // Get content type
+          const contentType = response.headers.get('content-type');
+          console.log('Content-Type:', contentType);
+          
+          // Try to parse as JSON if possible
+          if (contentType && contentType.includes('application/json')) {
+            return response.json();
+          } else {
+            // If not JSON, get the text
+            return response.text().then(text => {
+              console.log('Non-JSON response:', text);
+              throw new Error('Invalid response format (expected JSON)');
+            });
+          }
+        })
+        .then(data => {
+          // Re-enable the login button
+          loginButton.disabled = false;
+          loginButton.innerHTML = 'Login';
+          
+          console.log('Parsed data:', data);
+          
+          if (data.success) {
+            // Show success message
+            messageContainer.textContent = data.message;
+            messageContainer.classList.add('success-message');
+            messageContainer.style.display = 'block';
+            
+            // Redirect after a short delay
+            setTimeout(function() {
+              window.location.href = data.redirect;
+            }, 1500);
+          } else {
+            // Show error message
+            messageContainer.textContent = data.message;
+            messageContainer.classList.add('error-message');
+            messageContainer.style.display = 'block';
+          }
+        })
+        .catch(error => {
+          // Re-enable the login button
+          loginButton.disabled = false;
+          loginButton.innerHTML = 'Login';
+          
+          // Show error message
+          console.error('Error:', error);
+          messageContainer.textContent = 'An error occurred during login. Please try again.';
+          messageContainer.classList.add('error-message');
+          messageContainer.style.display = 'block';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

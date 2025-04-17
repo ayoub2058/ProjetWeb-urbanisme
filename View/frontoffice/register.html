@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - Clyptor</title>
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+  <link rel="stylesheet" href="css/login.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Spline 3D Background -->
+  <spline-viewer url="https://prod.spline.design/NOspby6AJwzuaFUg/scene.splinecode"></spline-viewer>
+
+  <!-- Form Container -->
+  <div class="container" id="form-container">
+    <div class="logo-container">
+      <a href="../../index.php"><i class="fas fa-arrow-left back-button"></i></a>
+      <h1 class="logo">CLYPTOR</h1>
+    </div>
+    <h2 id="form-title">Create Account</h2>
+
+    <!-- Register Form -->
+    <form id="register-form" action="../../Controller/UserController.php?action=register" method="POST">
+      <div class="input-group">
+        <i class="fas fa-user icon"></i>
+        <input type="text" name="username" placeholder="Username" required />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-envelope icon"></i>
+        <input type="email" name="email" placeholder="Email" required />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock icon"></i>
+        <input type="password" name="password" id="password" placeholder="Password" required />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock icon"></i>
+        <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required />
+      </div>
+      <div class="terms-check">
+        <input type="checkbox" id="terms" name="terms" required>
+        <label for="terms">I agree to the <a href="#" class="terms-link">Terms & Conditions</a></label>
+      </div>
+      <button type="submit" name="register">Create Account</button>
+    </form>
+
+    <!-- Toggle Link -->
+    <p class="toggle-container">
+      <span id="toggle-text">Already have an account?</span>
+      <a href="login.html" id="toggle-link">Login</a>
+    </p>
+    
+    <!-- Social Registration -->
+    <div class="social-login">
+      <p>Or register with</p>
+      <div class="social-icons">
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Additional styles to enhance the registration page */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      margin-bottom: 10px;
+    }
+    
+    .back-button {
+      position: absolute;
+      left: 0;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    
+    .back-button:hover {
+      transform: translateX(-5px);
+    }
+    
+    .logo {
+      color: #0ff;
+      font-size: 24px;
+      letter-spacing: 2px;
+      margin: 0;
+    }
+    
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    .input-group .icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7f8c8d;
+    }
+    
+    .input-group input {
+      padding-left: 45px !important;
+    }
+    
+    .terms-check {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      color: white;
+    }
+    
+    .terms-check input {
+      margin-right: 10px;
+      margin-top: 4px;
+    }
+    
+    .terms-check label {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    
+    .terms-link {
+      color: #0ff;
+      text-decoration: none;
+    }
+    
+    .toggle-container {
+      text-align: center;
+      margin-top: 25px;
+      color: white;
+    }
+    
+    .social-login {
+      margin-top: 30px;
+      text-align: center;
+    }
+    
+    .social-login p {
+      color: white;
+      margin-bottom: 15px;
+      position: relative;
+    }
+    
+    .social-login p:before,
+    .social-login p:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .social-login p:before {
+      left: 0;
+    }
+    
+    .social-login p:after {
+      right: 0;
+    }
+    
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: white;
+      transition: all 0.3s;
+    }
+    
+    .social-icon:hover {
+      transform: translateY(-3px);
+      background: #0ff;
+      color: #333;
+    }
+    
+    button[type="submit"] {
+      background: linear-gradient(135deg, #0ff, #0c9db5);
+      box-shadow: 0 8px 15px rgba(0, 255, 255, 0.3);
+      transition: all 0.3s;
+    }
+    
+    button[type="submit"]:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px rgba(0, 255, 255, 0.4);
+    }
+  </style>
+
+  <script>
+    // Password confirmation validation
+    document.getElementById('register-form').addEventListener('submit', function(e) {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm_password').value;
+      
+      if (password !== confirmPassword) {
+        e.preventDefault();
+        alert('Passwords do not match!');
+      }
+    });
+  </script>
+</body>
+</html> 
