@@ -1,0 +1,156 @@
+.posts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.post {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: calc(33.333% - 20px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.post h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.post p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.post-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.post-actions .btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+.post-actions .btn-edit {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.post-actions .btn-delete {
+    background-color: #f44336;
+    color: white;
+}
+
+.post-actions .btn:hover {
+    opacity: 0.9;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Posts Section */
+.post-card {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: #000; /* Ensure text is black */
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.post-header {
+    background: #f5f5f5;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.post-header h3 {
+    font-size: 18px;
+    color: #000; /* Ensure text is black */
+    margin: 0;
+}
+
+.post-header .post-price {
+    font-size: 16px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.post-body {
+    padding: 15px;
+    font-size: 14px;
+    color: #000; /* Ensure text is black */
+}
+
+.post-body p {
+    margin: 10px 0;
+}
+
+.post-footer {
+    padding: 15px;
+    font-size: 12px;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #ddd;
+}
+
+.post-actions {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    transition: background-color 0.2s ease;
+}
+
+.action-btn.edit-btn {
+    background-color: #007bff;
+}
+
+.action-btn.edit-btn:hover {
+    background-color: #0056b3;
+}
+
+.action-btn.delete-btn {
+    background-color: #dc3545;
+}
+
+.action-btn.delete-btn:hover {
+    background-color: #a71d2a;
+}
