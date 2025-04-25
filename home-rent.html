@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clyptor - Home Rent</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/home-rent.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.php" class="logo">
+                <!-- <img src="assets/images/logo.png" alt="Clyptor Logo"> -->
+                <span class="logo-text">Clyptor</span>
+            </a>
+            <div class="logo-3d"></div>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="covoiturage.html">Carpooling</a></li>
+                <li><a href="home-rent.html">Home Rent</a></li>
+                <li><a href="car-rent.html">Car Rent</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        
+        <div class="auth-buttons">
+            <a href="login.html" class="btn btn-outline">Login</a>
+            <a href="login.html" class="btn btn-primary">Register</a>
+        </div>
+        
+        <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+   
+    <main>
+        <section class="post-section">
+            <h2>Poster une annonce de location</h2>
+            <form id="post-form" class="post-form">
+                <!-- Nouveau champ ID -->
+                <div class="form-group">
+                    <label for="post-id">ID de l'annonce</label>
+                    <input type="text" id="post-id" placeholder="Entrez l'ID de l'annonce" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="post-title">Titre de l'annonce</label>
+                    <input type="text" id="post-title" placeholder="Ex: Maison avec jardin à louer" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="post-description">Description</label>
+                    <textarea id="post-description" rows="5" placeholder="Décrivez la maison : nombre de chambres, localisation, équipements, etc." required></textarea>
+                </div>
+    
+               
+                <div class="form-group">
+                    <label for="post-image">Image de la maison</label>
+                    <input type="file" id="post-image" accept="image/*">
+                </div>
+    
+                <button type="submit" class="btn btn-primary">Publier l'annonce</button>
+            </form>
+        </section>
+    
+        <section id="posts-container" class="posts-container"></section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <div class="logo-container">
+                    <a href="index.php" class="logo">
+                        <!-- <img src="assets/images/logo.png" alt="Clyptor Logo"> -->
+                        <span class="logo-text">Clyptor</span>
+                    </a>
+                </div>
+                <p>Clyptor provides innovative solutions for carpooling, home rentals, and car rentals. Join our community today!</p>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="services/carpooling.php">Carpooling</a></li>
+                    <li><a href="services/home-rent.php">Home Rent</a></li>
+                    <li><a href="services/car-rent.php">Car Rent</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/posts.js"></script>
+    <script>
+        // Additional scripts here if needed
+    </script>
+   
+</body>
+</html>
