@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 // Paramètres de connexion
 $host = 'localhost';        // ou 127.0.0.1
 $dbname = 'post';           // nom de la base de données
@@ -20,6 +21,22 @@ class config {
     {
         global $pdo;
         return $pdo;
+=======
+class config {
+    public static function getConnexion() {
+        $host = 'localhost';
+        $dbname = 'gestion_reservation';
+        $username = 'root';
+        $password = '';
+
+        try {
+            $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $conn;
+        } catch (PDOException $e) {
+            die('Erreur de connexion : ' . $e->getMessage());
+        }
+>>>>>>> 92dbdcaea693e0b829a4416e3d025f55479d0d3c
     }
 }
 ?>
