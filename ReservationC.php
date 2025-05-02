@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . "/auth/config.php";
+include_once __DIR__ . "/config.php";
 
 class ReservationC {
 <<<<<<< Updated upstream
