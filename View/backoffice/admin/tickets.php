@@ -91,21 +91,85 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
             text-overflow: ellipsis;
         }
         .action-buttons {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    min-height: 38px;
+    height: 38px;
+}
+.action-buttons button, .action-buttons a {
+    padding: 4px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.92rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 32px;
+    height: 32px;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.btn-view {
+    background-color: #673AB7;
+    color: #fff;
+}
+.btn-lu {
+    background-color: #2196F3;
+    color: #fff;
+}
+.btn-traite {
+    background-color: #4CAF50;
+    color: #fff;
+}
+.action-buttons .material-icons-sharp {
+    font-size: 18px !important;
+    vertical-align: middle;
+    line-height: 1;
+    color: #fff !important;
+}
+.action-buttons button:hover, .action-buttons a:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.response-count {
+    background-color: #ff9800;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.8rem;
+    margin-left: 5px;
+    align-self: center;
+}
         .action-buttons button, .action-buttons a {
-            padding: 5px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
+    padding: 3px 7px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 32px;
+}
+.action-buttons .material-icons-sharp {
+    font-size: 18px !important;
+    vertical-align: middle;
+    line-height: 1;
+}
+.response-count {
+    background-color: #ff9800;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.8rem;
+    margin-left: 5px;
+}
         .btn-view {
             background-color: #673AB7;
             color: white;
@@ -131,9 +195,9 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                     <h2>Cly<span class="danger">Ptor</span></h2>
                 </div>
                 <div class="close" id="close-btn">
-                    <span class="material-icons-sharp">
-                        close
-                    </span>
+                    <span class="material-icons-sharp" style="font-size:18px;vertical-align:middle;line-height:1;">
+    close
+</span>
                 </div>
             </div>
 
@@ -210,6 +274,79 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
             <?php endif; ?>
             
             <div class="tickets">
+                <style>
+                    .tickets {
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: flex-start;
+                    }
+                    .tickets table {
+                        width: 98%;
+                        border-collapse: separate;
+                        border-spacing: 0;
+                        background: #fff;
+                        border-radius: 20px;
+                        box-shadow: 0 6px 32px rgba(60,60,120,0.09);
+                        font-size: 1.08rem;
+                        overflow: hidden;
+                        margin: 0 auto;
+                    }
+                    .tickets th, .tickets td {
+                        padding: 18px 14px;
+                        text-align: left;
+                        vertical-align: middle;
+                    }
+                    .tickets th {
+                        background: #f7f7fb;
+                        font-weight: 700;
+                        color: #333;
+                        letter-spacing: 0.02em;
+                        border-bottom: 2px solid #ececf3;
+                        font-size: 1.14rem;
+                    }
+                    .tickets tr {
+                        transition: background 0.18s;
+                    }
+                    .tickets tbody tr:hover {
+                        background: #f3f6fa;
+                    }
+                    .tickets td {
+                        border-bottom: 1px solid #ececf3;
+                        font-size: 1.05rem;
+                    }
+                    .tickets tr:last-child td {
+                        border-bottom: none;
+                    }
+                    .tickets thead tr:first-child th:first-child {
+                        border-top-left-radius: 20px;
+                    }
+                    .tickets thead tr:first-child th:last-child {
+                        border-top-right-radius: 20px;
+                    }
+                    .tickets tbody tr:last-child td:first-child {
+                        border-bottom-left-radius: 20px;
+                    }
+                    .tickets tbody tr:last-child td:last-child {
+                        border-bottom-right-radius: 20px;
+                    }
+                    @media (max-width: 1100px) {
+                        .tickets table {
+                            font-size: 0.98rem;
+                        }
+                        .tickets th, .tickets td {
+                            padding: 10px 6px;
+                        }
+                    }
+                    @media (max-width: 800px) {
+                        .tickets table {
+                            font-size: 0.92rem;
+                        }
+                        .tickets th, .tickets td {
+                            padding: 7px 4px;
+                        }
+                    }
+                </style>
                 <table>
                     <thead>
                         <tr>
@@ -247,17 +384,17 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                                 <span class="response-count"><?php echo $response_count; ?></span>
                                                 <?php endif; ?>
                                             </a>
-                                            <form method="POST" action="">
+                                            <form method="POST" action="" style="margin: 0 5px;">
                                                 <input type="hidden" name="message_id" value="<?php echo $msg['id']; ?>">
                                                 <input type="hidden" name="status" value="Lu">
-                                                <button type="submit" style="background-color: #2196F3; color: white;">
+                                                <button type="submit" class="btn-lu">
                                                     <span class="material-icons-sharp">mark_email_read</span> Lu
                                                 </button>
                                             </form>
-                                            <form method="POST" action="">
+                                            <form method="POST" action="" style="margin: 0 5px;">
                                                 <input type="hidden" name="message_id" value="<?php echo $msg['id']; ?>">
                                                 <input type="hidden" name="status" value="Traité">
-                                                <button type="submit" style="background-color: #4CAF50; color: white;">
+                                                <button type="submit" class="btn-traite">
                                                     <span class="material-icons-sharp">check_circle</span> Traité
                                                 </button>
                                             </form>

@@ -488,10 +488,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_response'])) {
                 
                 <div class="response-form">
                     <h3>Ajouter une réponse</h3>
-                    <form method="POST" action="">
+                    <form method="POST" action="" id="add-response-form">
                         <div class="form-group">
                             <label for="response-text">Votre réponse :</label>
-                            <textarea id="response-text" name="response_text" required></textarea>
+                            <textarea id="response-text" name="response_text"></textarea>
+                            <span id="add-response-error" style="color: red; display: none;"></span>
                         </div>
                         <div class="form-actions">
                             <button type="submit" name="add_response" class="btn-primary">Envoyer la réponse</button>
@@ -510,6 +511,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_response'])) {
                         <div class="form-group">
                             <label for="edit-response-text">Votre réponse :</label>
                             <textarea id="edit-response-text" name="response_text" required></textarea>
+                            <span id="edit-response-error" style="color: red; display: none;"></span>
                         </div>
                         <div class="form-actions">
                             <button type="button" class="btn-cancel" onclick="closeEditModal()">Annuler</button>
@@ -558,6 +560,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_response'])) {
         const editModal = document.getElementById('edit-modal');
         const editResponseId = document.getElementById('edit-response-id');
         const editResponseText = document.getElementById('edit-response-text');
+        const editResponseError = document.getElementById('edit-response-error');
+        const editForm = editModal.querySelector('form');
 
         menuBtn.addEventListener('click', () => {
             sidebar.style.display = 'block';
@@ -580,11 +584,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_response'])) {
             editResponseId.value = id;
             editResponseText.value = text;
             editModal.style.display = 'block';
+            editResponseError.style.display = 'none';
+            editResponseError.textContent = '';
         }
 
         function closeEditModal() {
             editModal.style.display = 'none';
         }
+
+        // Validation JS personnalisée pour la réponse admin
+        editForm.addEventListener('submit', function(e) {
+            const value = editResponseText.value.trim();
+            if (value.length < 5) {
+                editResponseError.style.display = 'block';
+                editResponseError.textContent = 'La réponse doit contenir au moins 5 caractères.';
+                e.preventDefault();
+                return false;
+            }
+            // Optionnel : empêcher uniquement les espaces ou caractères vides
+            if (!value.replace(/\s/g, '').length) {
+                editResponseError.style.display = 'block';
+                editResponseError.textContent = 'La réponse ne peut pas être vide ou composée uniquement d\'espaces.';
+                e.preventDefault();
+                return false;
+            }
+            editResponseError.style.display = 'none';
+            editResponseError.textContent = '';
+        });
+
+        // Affichage dynamique de l'erreur lors de la saisie
+        editResponseText.addEventListener('input', function() {
+            const value = editResponseText.value.trim();
+            if (value.length >= 5 && value.replace(/\s/g, '').length) {
+                editResponseError.style.display = 'none';
+                editResponseError.textContent = '';
+            }
+        });
 
         // Close modal when clicking outside of it
         window.addEventListener('click', (event) => {
@@ -592,7 +627,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_response'])) {
                 closeEditModal();
             }
         });
+
+        // Validation JS personnalisée pour l'ajout de réponse admin (add response form)
+        const addForm = document.getElementById('add-response-form');
+        const addResponseText = document.getElementById('response-text');
+        const addResponseError = document.getElementById('add-response-error');
+
+        addForm.addEventListener('submit', function(e) {
+            const value = addResponseText.value.trim();
+            if (value.length < 5) {
+                addResponseError.style.display = 'block';
+                addResponseError.textContent = 'La réponse doit contenir au moins 5 caractères.';
+                e.preventDefault();
+                return false;
+            }
+            if (!value.replace(/\s/g, '').length) {
+                addResponseError.style.display = 'block';
+                addResponseError.textContent = 'La réponse ne peut pas être vide ou composée uniquement d\'espaces.';
+                e.preventDefault();
+                return false;
+            }
+            addResponseError.style.display = 'none';
+            addResponseError.textContent = '';
+        });
+
+        addResponseText.addEventListener('input', function() {
+            const value = addResponseText.value.trim();
+            if (value.length >= 5 && value.replace(/\s/g, '').length) {
+                addResponseError.style.display = 'none';
+                addResponseError.textContent = '';
+            }
+        });
     </script>
 </body>
 
+</html>
 </html> 
