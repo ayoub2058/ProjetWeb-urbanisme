@@ -122,9 +122,30 @@ $pageTitle = "Contact";
     <link rel="stylesheet" href="css/hf.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/notifications.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Debug script for the notification system -->
+    <script>
+    // Store user debug flag
+    const urlParams = new URLSearchParams(window.location.search);
+    const debugMode = false;
+    
+    // Log debug message if in debug mode
+    function debugLog(message, data) {
+        // Empty function - debug removed
+    }
+    
+    // Initialize with test notifications if debug=true
+    document.addEventListener('DOMContentLoaded', function() {
+        // Debug functionality removed
+    });
+    </script>
 </head>
 <body>
+    <!-- Toast notification container -->
+    <div id="toast-container"></div>
+    
     <header class="header">
         <div class="logo-container">
             <a href="index.php" class="logo">
@@ -146,6 +167,23 @@ $pageTitle = "Contact";
         
         <div class="auth-buttons">
             <?php if(isset($_SESSION['user_id'])): ?>
+                <!-- Notification Icon -->
+                <div class="notification-wrapper">
+                    <a href="#" class="notification-badge" id="notificationsDropdown" data-count="0">
+                        <i class="fas fa-bell"></i>
+                    </a>
+                    <!-- Notifications Dropdown Menu -->
+                    <div id="notifications-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <button class="mark-all-read">Mark all as read</button>
+                        </div>
+                        <ul class="notification-list" id="notification-list">
+                            <li class="empty-notifications">No new notifications</li>
+                        </ul>
+                    </div>
+                </div>
+                
                 <a href="?page=user&action=dashboard" class="btn btn-outline"><?php echo $_SESSION['username']; ?></a>
                 <a href="?page=user&action=logout" class="btn btn-primary">Logout</a>
             <?php else: ?>
@@ -670,6 +708,47 @@ document.addEventListener('DOMContentLoaded', function() {
             minute: '2-digit'
         });
     }
+    
+    // Check for ticket to highlight (from notification)
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const highlightTicketId = urlParams.get('highlight');
+        
+        if (highlightTicketId) {
+            // Find the ticket and highlight it
+            const tickets = document.querySelectorAll('.ticket-card');
+            let ticketFound = false;
+            
+            tickets.forEach(ticket => {
+                const links = ticket.querySelectorAll('a');
+                
+                // Find the ticket ID from the edit link
+                links.forEach(link => {
+                    if (link.href.includes('action=edit&id=')) {
+                        const match = link.href.match(/id=(\d+)/);
+                        if (match && match[1] === highlightTicketId) {
+                            // Highlight the ticket
+                            ticket.classList.add('highlight-ticket');
+                            ticket.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            
+                            // Open the ticket details after a short delay
+                            setTimeout(() => {
+                                viewTicketDetails(parseInt(highlightTicketId));
+                            }, 800);
+                            
+                            ticketFound = true;
+                        }
+                    }
+                });
+            });
+            
+            // Remove the highlight parameter from the URL to avoid rehighlighting on refresh
+            if (ticketFound) {
+                const newUrl = window.location.pathname + window.location.search.replace(/[?&]highlight=\d+/, '');
+                window.history.replaceState({}, document.title, newUrl);
+            }
+        }
+    });
     </script>
     <?php endif; ?>
 
@@ -678,7 +757,266 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </main>
 
+<!-- Add CSS for highlighted ticket -->
+<style>
+.highlight-ticket {
+    animation: highlight-pulse 2s ease-in-out;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.7) !important;
+    position: relative;
+    z-index: 1;
+}
 
+@keyframes highlight-pulse {
+    0% { box-shadow: 0 0 15px rgba(0, 255, 0, 0.7); }
+    50% { box-shadow: 0 0 25px rgba(0, 255, 0, 0.9); }
+    100% { box-shadow: 0 0 15px rgba(0, 255, 0, 0.7); }
+}
+
+/* Notification styles specific to the contact page */
+.notification-wrapper {
+    display: inline-flex;
+    margin-right: 20px;
+    position: relative;
+}
+
+.auth-buttons .notification-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.auth-buttons .notification-badge:hover {
+    background: rgba(0, 255, 0, 0.2);
+    transform: scale(1.1);
+}
+
+.auth-buttons .notification-badge[data-count]:after {
+    position: absolute;
+    right: -6px;
+    top: -6px;
+    content: attr(data-count);
+    font-size: 11px;
+    padding: 3px;
+    min-width: 20px;
+    height: 20px;
+    line-height: 14px;
+    border-radius: 50%;
+    background-color: #ff4b5c;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Toast notification style fixes */
+.toast-notification {
+    top: 80px;
+    right: 20px;
+    z-index: 9999;
+}
+
+/* Notification dropdown */
+.notification-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-badge {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.notification-badge:after {
+    content: attr(data-count);
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 11px;
+    background-color: var(--danger);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    line-height: 1;
+    font-weight: bold;
+    display: attr(data-count) ? 'block' : 'none';
+}
+
+/* Hide badge if count is 0 */
+.notification-badge[data-count="0"]:after {
+    display: none;
+}
+
+/* New response highlight styling */
+.ticket-card.new-response {
+    animation: pulse-highlight 2s infinite;
+    box-shadow: 0 0 8px rgba(var(--primary-rgb), 0.6);
+    border-left: 3px solid var(--primary);
+}
+
+@keyframes pulse-highlight {
+    0% {
+        box-shadow: 0 0 8px rgba(var(--primary-rgb), 0.4);
+    }
+    50% {
+        box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.7);
+    }
+    100% {
+        box-shadow: 0 0 8px rgba(var(--primary-rgb), 0.4);
+    }
+}
+
+/* Highlight for clicked notification */
+.ticket-card.highlight-ticket {
+    animation: highlight-flash 2s;
+    border-left: 3px solid var(--secondary);
+}
+
+@keyframes highlight-flash {
+    0%, 100% {
+        background-color: rgba(var(--secondary-rgb), 0.1);
+    }
+    50% {
+        background-color: rgba(var(--secondary-rgb), 0.3);
+    }
+}
+
+/* Notification dropdown */
+.notifications-dropdown {
+    position: absolute;
+    right: 0;
+    top: 36px;
+    width: 300px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.notifications-dropdown.show {
+    display: block;
+}
+
+.notifications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.notifications-title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.mark-all-read {
+    font-size: 12px;
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.notification-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.notification-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.notification-item:hover {
+    background-color: #f9f9f9;
+}
+
+.notification-item.unread {
+    background-color: rgba(var(--primary-rgb), 0.05);
+    border-left: 3px solid var(--primary);
+}
+
+.notification-title {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.notification-message {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.notification-time {
+    font-size: 11px;
+    color: #999;
+}
+
+.empty-notifications {
+    padding: 15px;
+    text-align: center;
+    color: #777;
+    font-size: 13px;
+}
+
+/* Toast notifications */
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.toast {
+    background-color: white;
+    color: #333;
+    padding: 15px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    width: 300px;
+    border-left: 4px solid var(--primary);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-header {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.toast-close {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.toast-body {
+    font-size: 13px;
+}
+</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -739,6 +1077,473 @@ document.addEventListener('DOMContentLoaded', function() {
         <p>&copy; <script>document.write(new Date().getFullYear())</script> Clyptor. All rights reserved.</p>
     </div>
 </footer>
+
+<!-- Add notification system JavaScript -->
+<?php if(isset($_SESSION['user_id'])): ?>
+<script>
+// Main notification system
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM Elements
+    const notificationBadge = document.querySelector('.notification-badge');
+    const notificationsDropdown = document.getElementById('notifications-dropdown');
+    const notificationList = document.getElementById('notification-list');
+    const markAllReadBtn = document.querySelector('.mark-all-read');
+    const toastContainer = document.getElementById('toast-container');
+    
+    // Variables for notification state
+    let notifications = [];
+    let unreadCount = 0;
+    
+    // Toggle notifications dropdown
+    if (notificationBadge) {
+        notificationBadge.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            notificationsDropdown.classList.toggle('show');
+        });
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (notificationsDropdown && !notificationBadge.contains(e.target) && !notificationsDropdown.contains(e.target)) {
+            notificationsDropdown.classList.remove('show');
+        }
+    });
+    
+    // Mark all notifications as read
+    if (markAllReadBtn) {
+        markAllReadBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (notifications.length > 0) {
+                notifications.forEach(notification => {
+                    notification.read = true;
+                });
+                unreadCount = 0;
+                updateNotificationBadge();
+                renderNotifications();
+                localStorage.setItem('clyptor_notifications', JSON.stringify(notifications));
+            }
+        });
+    }
+
+    // ... Rest of the notification code ...
+    
+    // Show a test toast notification in debug mode
+    if (debugMode) {
+        setTimeout(() => {
+            showToastNotification('Debug Mode Active', 'The notification system is in debug mode');
+        }, 1000);
+    }
+    
+    // Initialize notifications
+    loadNotifications();
+    
+    // Show notifications dropdown if in debug mode
+    if (debugMode && notificationsDropdown) {
+        setTimeout(() => {
+            notificationsDropdown.classList.add('show');
+        }, 500);
+    }
+    
+    // Fetch all existing responses
+    fetchAllResponses();
+    
+    // Check for new responses after a delay
+    setTimeout(checkNewResponses, 2000);
+    
+    // Set up periodic checking (every 15 seconds)
+    setInterval(checkNewResponses, 15000);
+    
+    // Function to fetch all existing admin responses
+    function fetchAllResponses() {
+        fetch('fetch_all_responses.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.responses && data.responses.length > 0) {
+                    // Process all existing responses
+                    processExistingResponses(data.responses);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching existing responses:', error);
+            });
+    }
+    
+    // Function to process existing responses
+    function processExistingResponses(responses) {
+        const storedNotifications = JSON.parse(localStorage.getItem('clyptor_notifications')) || [];
+        const notificationIds = storedNotifications.map(n => n.responseId);
+        
+        let hasNewNotifications = false;
+        
+        responses.forEach(response => {
+            // Check if notification already exists
+            if (!notificationIds.includes(parseInt(response.id))) {
+                const newNotification = {
+                    responseId: parseInt(response.id),
+                    messageId: parseInt(response.message_id),
+                    title: 'Response to: ' + (response.message_subject || 'Your ticket'),
+                    message: truncateText(response.response_text, 50),
+                    time: response.created,
+                    read: false
+                };
+                
+                storedNotifications.push(newNotification);
+                hasNewNotifications = true;
+            }
+        });
+        
+        if (hasNewNotifications) {
+            // Save updated notifications
+            localStorage.setItem('clyptor_notifications', JSON.stringify(storedNotifications));
+            
+            // Update UI
+            notifications = storedNotifications;
+            updateUnreadCount();
+            updateNotificationBadge();
+            renderNotifications();
+            
+            // Show toast for debug mode
+            if (debugMode) {
+                showToastNotification('New Notifications Found', `Found ${responses.length} admin responses`);
+            }
+        } else {
+            // Still load the notifications
+            notifications = storedNotifications;
+            updateUnreadCount();
+            updateNotificationBadge();
+            renderNotifications();
+        }
+    }
+    
+    // Function to check for new responses
+    function checkNewResponses() {
+        // Get the most recent notification time
+        const mostRecentTime = getMostRecentNotificationTime();
+        
+        // Prepare the URL with the most recent notification time
+        const url = `check_new_responses.php?last_check=${encodeURIComponent(mostRecentTime)}`;
+        
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success && data.new_responses > 0) {
+                    // Process new responses
+                    processNewResponses(data.responses);
+                    
+                    // If we have the ticket list and there are new messages for those tickets,
+                    // update their display as well
+                    updateTicketsIfNeeded(data.responses);
+                }
+            })
+            .catch(error => {
+                console.error('Error checking for new responses:', error);
+                // Don't let one error stop future checks - we'll try again next interval
+            });
+    }
+    
+    // Function to update tickets in the ticket list if they received new responses
+    function updateTicketsIfNeeded(responses) {
+        if (!responses || responses.length === 0) return;
+        
+        // Get all ticket cards
+        const ticketCards = document.querySelectorAll('.ticket-card');
+        if (!ticketCards || ticketCards.length === 0) return;
+        
+        // Extract message IDs from responses
+        const updatedMessageIds = responses.map(r => parseInt(r.message_id));
+        
+        // For each ticket card, check if it needs updating
+        ticketCards.forEach(card => {
+            const links = card.querySelectorAll('a');
+            
+            // Find the ticket ID from the edit link
+            links.forEach(link => {
+                if (link.href.includes('action=edit&id=')) {
+                    const match = link.href.match(/id=(\d+)/);
+                    if (match && match[1] && updatedMessageIds.includes(parseInt(match[1]))) {
+                        // This ticket has a new response - update its display
+                        // Add a visual indicator
+                        card.classList.add('new-response');
+                        
+                        // If the status is still "Nouveau", update it to "Lu"
+                        const statusElement = card.querySelector('.ticket-status');
+                        if (statusElement && statusElement.textContent.trim() === 'Nouveau') {
+                            statusElement.textContent = 'Lu';
+                            statusElement.className = 'ticket-status lu';
+                            card.setAttribute('data-status', 'lu');
+                        }
+                    }
+                }
+            });
+        });
+    }
+    
+    // Get the most recent notification time
+    function getMostRecentNotificationTime() {
+        if (notifications.length === 0) {
+            // If no notifications, use a date from the past
+            return '2000-01-01T00:00:00Z';
+        }
+        
+        // Sort notifications by time (newest first)
+        const sortedNotifications = [...notifications].sort((a, b) => new Date(b.time) - new Date(a.time));
+        
+        // Return the most recent time
+        return sortedNotifications[0].time;
+    }
+    
+    // Function to truncate text
+    function truncateText(text, maxLength) {
+        if (!text) return '';
+        if (text.length <= maxLength) return text;
+        return text.substring(0, maxLength) + '...';
+    }
+    
+    // Process new responses and create notifications
+    function processNewResponses(responses) {
+        const storedNotifications = JSON.parse(localStorage.getItem('clyptor_notifications')) || [];
+        const notificationIds = storedNotifications.map(n => n.responseId);
+        
+        let hasNewNotifications = false;
+        let newResponsesCount = 0;
+        
+        responses.forEach(response => {
+            // Check if notification already exists
+            if (!notificationIds.includes(parseInt(response.id))) {
+                const newNotification = {
+                    responseId: parseInt(response.id),
+                    messageId: parseInt(response.message_id),
+                    title: 'New Response from Admin',
+                    message: truncateText(response.response_text, 50),
+                    time: response.created,
+                    read: false
+                };
+                
+                storedNotifications.push(newNotification);
+                hasNewNotifications = true;
+                newResponsesCount++;
+            }
+        });
+        
+        if (hasNewNotifications) {
+            // Save updated notifications
+            localStorage.setItem('clyptor_notifications', JSON.stringify(storedNotifications));
+            
+            // Update UI
+            notifications = storedNotifications;
+            updateUnreadCount();
+            updateNotificationBadge();
+            renderNotifications();
+            
+            // Show toast notification
+            showToastNotification(
+                newResponsesCount > 1 ? 'New Responses' : 'New Response', 
+                newResponsesCount > 1 ? `You have ${newResponsesCount} new responses from admin!` : 'You have a new response from the admin!'
+            );
+            
+            // If we're on a ticket detail view and this is related to the current ticket
+            updateOpenModalIfNeeded(responses);
+        }
+    }
+    
+    // Update the modal if it's open and showing a ticket related to the new responses
+    function updateOpenModalIfNeeded(responses) {
+        const modal = document.getElementById('ticket-detail-modal');
+        if (!modal || modal.style.display !== 'block') return;
+        
+        // Get currently displayed ticket ID
+        const ticketIdElement = document.getElementById('modal-ticket-id');
+        if (!ticketIdElement) return;
+        
+        const currentTicketId = ticketIdElement.textContent;
+        
+        // Check if any of the new responses are for this ticket
+        const matchingResponses = responses.filter(r => r.message_id.toString() === currentTicketId);
+        
+        if (matchingResponses.length > 0) {
+            // Reload responses for this ticket
+            loadAdminResponses(currentTicketId);
+        }
+    }
+    
+    // Update unread count
+    function updateUnreadCount() {
+        unreadCount = notifications.filter(n => !n.read).length;
+    }
+    
+    // Update notification badge
+    function updateNotificationBadge() {
+        if (notificationBadge) {
+            notificationBadge.setAttribute('data-count', unreadCount.toString());
+        }
+    }
+    
+    // Render notifications in the dropdown
+    function renderNotifications() {
+        if (!notificationList) return;
+        
+        if (notifications.length === 0) {
+            notificationList.innerHTML = '<li class="empty-notifications">No new notifications</li>';
+            return;
+        }
+        
+        // Sort notifications by time (newest first)
+        notifications.sort((a, b) => new Date(b.time) - new Date(a.time));
+        
+        notificationList.innerHTML = '';
+        
+        notifications.forEach(notification => {
+            const notificationItem = document.createElement('li');
+            notificationItem.className = 'notification-item' + (notification.read ? '' : ' unread');
+            notificationItem.dataset.messageId = notification.messageId;
+            
+            notificationItem.innerHTML = `
+                <div class="notification-title">${notification.title}</div>
+                <div class="notification-message">${notification.message}</div>
+                <div class="notification-time">${formatDate(notification.time)}</div>
+            `;
+            
+            // Handle click on notification
+            notificationItem.addEventListener('click', function() {
+                // Mark notification as read
+                notification.read = true;
+                localStorage.setItem('clyptor_notifications', JSON.stringify(notifications));
+                updateUnreadCount();
+                updateNotificationBadge();
+                renderNotifications();
+                
+                // Highlight and scroll to the ticket
+                highlightTicket(notification.messageId);
+            });
+            
+            notificationList.appendChild(notificationItem);
+        });
+    }
+    
+    // Highlight and scroll to a ticket
+    function highlightTicket(messageId) {
+        const tickets = document.querySelectorAll('.ticket-card');
+        let ticketFound = false;
+        
+        tickets.forEach(ticket => {
+            const links = ticket.querySelectorAll('a');
+            
+            // Find the ticket ID from the edit link
+            links.forEach(link => {
+                if (link.href.includes('action=edit&id=')) {
+                    const match = link.href.match(/id=(\d+)/);
+                    if (match && match[1] === messageId.toString()) {
+                        // Highlight the ticket
+                        ticket.classList.add('highlight-ticket');
+                        ticket.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        
+                        // Open the ticket details after a short delay
+                        setTimeout(() => {
+                            if (typeof viewTicketDetails === 'function') {
+                                viewTicketDetails(parseInt(messageId));
+                            }
+                        }, 800);
+                        
+                        ticketFound = true;
+                    }
+                }
+            });
+        });
+        
+        // If not found, check if we need to add highlight parameter to URL
+        if (!ticketFound) {
+            // Redirect to contact page with ticket highlighted
+            window.location.href = 'contact.php?highlight=' + messageId;
+        }
+    }
+    
+    // Format date for notifications
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMins / 60);
+        const diffDays = Math.floor(diffHours / 24);
+        
+        if (diffMins < 1) {
+            return 'Just now';
+        } else if (diffMins < 60) {
+            return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+        } else if (diffHours < 24) {
+            return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+        } else if (diffDays < 7) {
+            return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+        } else {
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+    }
+    
+    // Show toast notification
+    function showToastNotification(title, message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.innerHTML = `
+            <div class="toast-icon">
+                <i class="fas fa-bell"></i>
+            </div>
+            <div class="toast-content">
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close">&times;</button>
+        `;
+        
+        if (toastContainer) {
+            toastContainer.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            // Auto close after 5 seconds
+            setTimeout(() => {
+                closeToast(toast);
+            }, 5000);
+            
+            // Close button handler
+            toast.querySelector('.toast-close').addEventListener('click', function() {
+                closeToast(toast);
+            });
+        }
+    }
+    
+    // Close toast
+    function closeToast(toast) {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }
+    
+    // Load notifications from localStorage
+    function loadNotifications() {
+        try {
+            notifications = JSON.parse(localStorage.getItem('clyptor_notifications')) || [];
+            updateUnreadCount();
+            updateNotificationBadge();
+            renderNotifications();
+        } catch (error) {
+            console.error('Error loading notifications:', error);
+            notifications = [];
+            localStorage.setItem('clyptor_notifications', JSON.stringify([]));
+        }
+    }
+});
+</script>
+<?php endif; ?>
 
 <!-- Add mobile menu toggle script -->
 <script>

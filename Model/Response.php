@@ -154,5 +154,35 @@ class Response {
         
         return false;
     }
+
+    /**
+     * Get responses after a specified date for a user's messages
+     *
+     * @param int $userId The user ID
+     * @param string $date The date to check responses after
+     * @return array The list of responses
+     */
+    public function getResponsesAfterDateForUser($userId, $date) {
+        // Query to get all responses for messages belonging to this user
+        // that were created after the specified date
+        $query = "SELECT r.*, m.subject as message_subject 
+                 FROM admin_responses r 
+                 JOIN contact_messages m ON r.message_id = m.id 
+                 WHERE m.user_id = :user_id 
+                 AND r.created > :date
+                 ORDER BY r.created DESC";
+        
+        try {
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':user_id', $userId);
+            $stmt->bindParam(':date', $date);
+            $stmt->execute();
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Database error in getResponsesAfterDateForUser: " . $e->getMessage());
+            return [];
+        }
+    }
 }
 ?> 
