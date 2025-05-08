@@ -1,27 +1,6 @@
 <?php
-<<<<<<< HEAD
-// Paramètres de connexion
-$host = 'localhost';        // ou 127.0.0.1
-$dbname = 'post';           // nom de la base de données
-$username = 'root';         // nom d'utilisateur MySQL (par défaut : root)
-$password = '';             // mot de passe (souvent vide en local)
+namespace GestionReservation; // Déclaration correcte de l'espace de noms
 
-// Connexion à la base de données avec PDO
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    // Activer les erreurs PDO en mode exception
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    // En cas d'erreur, afficher un message
-    die("Erreur de connexion : " . $e->getMessage());
-}
-
-class config {
-    public static function getConnexion()
-    {
-        global $pdo;
-        return $pdo;
-=======
 class config {
     public static function getConnexion() {
         $host = 'localhost';
@@ -30,13 +9,12 @@ class config {
         $password = '';
 
         try {
-            $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $conn;
-        } catch (PDOException $e) {
+            $db = new \PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            return $db;
+        } catch (\PDOException $e) {
             die('Erreur de connexion : ' . $e->getMessage());
         }
->>>>>>> 92dbdcaea693e0b829a4416e3d025f55479d0d3c
     }
 }
 ?>

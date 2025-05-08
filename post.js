@@ -58,22 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
         container.appendChild(card);
     }
+ 
+    
 
-    window.supprimerAnnonce = async function (id, btn) {
-        if (!confirm("Supprimer cette annonce ?")) return;
-
-        const res = await fetch(`supprimer.php?id=${id}`);
-        const data = await res.json();
-
-        if (data.success) {
-            alert("Annonce supprimée");
-            btn.closest(".post-card").remove();
-        } else {
-            alert("Erreur lors de la suppression");
-        }
-    }
-
-    window.modifierAnnonce = function (id) {
-        alert("Fonction modifier à implémenter pour l’ID " + id);
-    }
+  
 });
